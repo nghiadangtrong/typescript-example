@@ -68,7 +68,7 @@ class ComponentS {
 }
 
 /**
- | Output order
+ | Luồng thực hiện
  | *******************
  | Loger2 Factory
  | logger2...logger
@@ -76,3 +76,70 @@ class ComponentS {
  | Template
  */ 
 const componentS = new ComponentS();
+
+
+/**
+ * @TODO Viết lại example 3
+ * 
+ * @des Example 4  
+ */
+function withTemplate2(template: string, hookId: string) {
+    return function<T extends { new(...args: any[]): {name: string}}> (originalContructor: T) {
+        
+        // Thay đổi cấu trúc conctructor của class gốc => class extends originalContrucor
+        
+        // Muốn sửa đổi phải chỉ rõ kiểu class gốc => originalContrucor: T 
+
+        // Kiểu T phải chỉ rõ interface controcutor cũng như interface nguyên mẫu 
+        //      => T extends { new(...args: []): { name: string} }
+        return class extends originalContructor {
+            constructor(...args: any[]){
+                super()
+                const hookEl = document.getElementById(hookId);
+                if (hookEl) {
+                    hookEl.innerHTML = template;
+                    hookEl.querySelector('h1')!.textContent = this.name;
+                }
+            }
+
+        }
+    }
+}
+
+@withTemplate2('<h1>THis is tag h1</h1>', 'app')
+class ComponentS2 {
+    constructor(public name: string) {
+    }
+}
+
+
+/**
+ * @TODO Giải thích withTemplate2
+ * 
+ * @link https://stackoverflow.com/questions/13407036/how-does-interfaces-with-construct-signatures-work
+ * @link https://fettblog.eu/typescript-interface-constructor-pattern/
+ * 
+ * @des Interface with construct signatures
+ *      Rằng buộc contructor và đầu ra đối tượng của class 
+ *      new (...args: any[]): { [index: string]: any} 
+ *           contructor             instance class
+ */
+interface IFilter {
+    new(name: string): { name: string}
+}
+
+function handleFilter(filter: IFilter) {
+    return new filter('new name');
+}
+
+class ClassFilter {
+    name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
+/**
+ * @output { name: 'new name' }
+ */
+handleFilter(ClassFilter)

@@ -34,12 +34,15 @@ function logParameter(target: any, name: string | Symbol, position: number) {
 }
 
 
+// stt-5-end
 @logClass
 class HandleProduct {
 
+    // stt-1
     @logProperty
     title: string;
 
+    // stt-2
     @logProperty
     private _price: number;
 
@@ -48,6 +51,7 @@ class HandleProduct {
         this._price = price;
     }
 
+    // stt-3
     @logAccessor
     set price(price: number) {
         if(price > 0) {
@@ -57,8 +61,13 @@ class HandleProduct {
         }
     }
 
+    // stt-4
     @logMethod
     getPriceWithTax(@logParameter tax: number) {
         return this._price * (1 + tax);
     }
 }
+
+console.log('+++++++++++++++++++++++++++++++++++++')
+const pd1 = new HandleProduct('tieu de', 2);
+console.log('-------------------------------------');
