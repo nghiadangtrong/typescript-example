@@ -1,0 +1,22 @@
+{
+  "name": "1-simple",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "tsc": "tsc",
+    "nodemon": "nodemon",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "tsc:watch": "tsc -watch",
+    "nodemon:watch": "nodemon -w dist -q",
+    "dev": "concurrently -k -n COMPILER,NODEMON -c yellow,blue npm:tsc:watch npm:nodemon:watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.3.0",
+    "nodemon": "^2.0.19",
+    "typescript": "^4.7.4"
+  }
+}
